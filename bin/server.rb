@@ -1,0 +1,2 @@
+class Server < Thor
+end

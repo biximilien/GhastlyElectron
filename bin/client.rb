@@ -1,0 +1,2 @@
+class Client < Thor
+end
