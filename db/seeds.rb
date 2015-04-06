@@ -2,11 +2,20 @@
 
 # include dependencies
 require './config/environment'
-require './lib/ghastly/electron/server'
 
-# defaults
-DEFAULT_HOST = 'localhost'
-DEFAULT_PORT = 25252
+require './lib/ghastly/electron'
+require './lib/ghastly/electron/server'
+require './lib/ghastly/electron/user'
 
 # Create default server
-Ghastly::Electron::Server.create(host: DEFAULT_HOST, port: DEFAULT_PORT)
+Ghastly::Electron::Server.create(
+  host: Ghastly::Electron::Default::HOST,
+  port: Ghastly::Electron::Default::PORT
+)
+
+# Create default admin
+Ghastly::Electron::User.create(
+  username: 'admin',
+  password: 'secret',
+  admin: true
+)

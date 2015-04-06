@@ -4,10 +4,8 @@ require 'socket'
 
 class Ghastly::Electron::Client
 
-  DEFAULT_HOST = 'localhost'
-  DEFAULT_PORT = 25252
-
-  def connect(host = DEFAULT_HOST, port = DEFAULT_PORT)
+  def connect(host = Ghastly::Electron::Default::HOST, port = Ghastly::Electron::Default::PORT)
+    
     @server = TCPSocket.new(host, port)
 
     while line = @server.gets

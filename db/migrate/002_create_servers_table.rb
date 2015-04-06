@@ -1,12 +1,11 @@
-class CreateServersTable < ActiveRecord::Migration
+require './lib/ghastly/electron'
 
-  DEFAULT_HOST = 'localhost'
-  DEFAULT_PORT = 25252
+class CreateServersTable < ActiveRecord::Migration
 
   def change
     create_table :servers do |t|
-      t.string  :host, null: false, default: DEFAULT_HOST
-      t.integer :port, null: false, default: DEFAULT_PORT
+      t.string  :host, null: false, default: Ghastly::Electron::Default::HOST
+      t.integer :port, null: false, default: Ghastly::Electron::Default::PORT
     end
 
     add_index :servers, :port, unique: true

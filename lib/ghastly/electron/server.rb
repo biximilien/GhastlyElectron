@@ -4,12 +4,10 @@ require 'socket'
 
 class Ghastly::Electron::Server < ActiveRecord::Base
 
-  DEFAULT_HOST = 'localhost'
-  DEFAULT_PORT = 25252
-
   has_many :rooms
 
-  def start(host = DEFAULT_HOST, port = DEFAULT_PORT)
+  def start(host = Ghastly::Electron::Default::HOST, port = Ghastly::Electron::Default::PORT)
+    
     @server = TCPServer.new(host, port)
     @running = true
 
