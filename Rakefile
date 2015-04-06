@@ -1,3 +1,5 @@
+require './config/environment'
+
 require 'yaml'
 require 'logger'
 require 'active_record'
@@ -73,5 +75,10 @@ namespace :db do
   desc "Retrieves the current schema version number"
   task version: :configure_connection do
     puts "Current version: #{ActiveRecord::Migrator.current_version}"
+  end
+
+  desc "Seeds database with data from db/seeds.rb"
+  task seed: :configure_connection do
+    load './db/seeds.rb'
   end
 end

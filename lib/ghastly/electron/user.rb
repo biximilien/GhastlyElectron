@@ -3,9 +3,25 @@ require 'bcrypt'
 class Ghastly::Electron::User < ActiveRecord::Base
   include BCrypt
 
+
+
+  ### Rooms
+
   has_and_belongs_to_many :rooms
 
+
+
+  ### Messages
+
   has_many :messages
+
+
+
+  ### Username
+
+  validates :username, presence: true, uniqueness: true
+
+
 
   def join(room)
     rooms << room

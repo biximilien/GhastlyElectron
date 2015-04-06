@@ -1,4 +1,4 @@
-module Ghastly
-  module Electron
-  end
+require './lib/ghastly'
+
+module Ghastly::Electron
 end
