@@ -8,12 +8,14 @@ require 'thor'
 require 'active_record'
 require 'yaml'
 
-# recursively requires all files in ./lib and down that end in .rb
-Dir.glob('./lib/*').each do |folder|
-  Dir.glob(folder +"/*.rb").each do |file|
-    require file
-  end
-end
+# require local lib files
+require './lib/ghastly'
+require './lib/ghastly/electron'
+require './lib/ghastly/electron/server'
+require './lib/ghastly/electron/room'
+require './lib/ghastly/electron/session'
+require './lib/ghastly/electron/user'
+require './lib/ghastly/electron/message'
 
 # set application environment
 GHASTLY_ELECTRON_ENV = ENV['GHASTLY_ELECTRON_ENV'] || 'development'

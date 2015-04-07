@@ -79,6 +79,6 @@ namespace :db do
 
   desc "Seeds database with data from db/seeds.rb"
   task seed: :configure_connection do
-    load './db/seeds.rb'
+    require './db/seeds'
   end
 end

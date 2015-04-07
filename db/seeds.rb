@@ -1,11 +1,11 @@
 # seed.rb
 
 # include dependencies
-require './config/environment'
+# require './config/environment'
 
-require './lib/ghastly/electron'
-require './lib/ghastly/electron/server'
-require './lib/ghastly/electron/user'
+# require './lib/ghastly/electron'
+# require './lib/ghastly/electron/server'
+# require './lib/ghastly/electron/user'
 
 # Create default server
 Ghastly::Electron::Server.create(
