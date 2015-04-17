@@ -5,10 +5,14 @@ require 'socket'
 
 class Ghastly::Electron::Server < ActiveRecord::Base
 
+  attr_accessor :log
+
   has_many :rooms
 
   def start
-    log = Logger.new(STDOUT)
+    self.log = Logger.new(STDOUT)
+    log.level = Logger::WARN
+
     @socket = TCPServer.new(host, port)
     @clients = []
     update(running: true)
@@ -24,7 +28,7 @@ class Ghastly::Electron::Server < ActiveRecord::Base
         
         # Display welcome message
         puts "#{client} has connected."
-        client.puts Message.new("server", "Ghastly Electron Server -- Welcome! -- #{Time.now}")
+        client.puts Ghastly::Electron::Net::Message.new("server", "Ghastly Electron Server -- Welcome! -- #{Time.now}")
         
         # Main client loop
         loop do

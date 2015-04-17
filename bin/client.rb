@@ -8,6 +8,8 @@ class Client < Thor
   def connect(host = Ghastly::Electron::Default::HOST, port = Ghastly::Electron::Default::PORT)
     @client = Ghastly::Electron::Client.new
     @client.connect(host, port)
+  rescue Ghastly::Electron::Client::ConnectionClosed, Ghastly::Electron::Client::ConnectionRefused => e
+    puts e.message
   end
 end
 
