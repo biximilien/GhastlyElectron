@@ -77,18 +77,46 @@ class Ghastly::Electron::Client
   def send_message(text)
     log.debug "Building net message from text input by user"
     message = Ghastly::Electron::Net::Message.new(user, text)
-    send message if message.valid?
+    if message.valid?
+      if command?(message.user, message.content)
+        send message
+        handle_command(message.user, message.content)
+      else
+        send message
+      end
+    end
   end
 
   def listen
     log.debug "Querying server for message"
     @server.gets.chomp
+  rescue IOError
+    exit
   end
 
   def receive_message
     log.debug "Building message from text received by server"
     message = Ghastly::Electron::Net::Message.parse(listen)
-    puts "#{message.user}: #{message.content}" if message.valid?
+    if message.valid?
+      if command?(message.user, message.content)
+        handle_command(message.content)
+      else
+        puts "#{message.user}: #{message.content}"
+      end
+    end
+  end
+
+  def command?(user, command)
+    return true if [:user, :passwd, :time, :quit, :exit].include? command.to_sym
+    false
+  end
+
+  def handle_command(user, command)
+    case command
+    when /DISCONNECT/, /quit/, /exit/
+      @server.close
+    else
+    end
   end
 
   def read

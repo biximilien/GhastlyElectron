@@ -39,7 +39,7 @@ class Ghastly::Electron::Server < ActiveRecord::Base
             if command?(message.content)
               # log command and send command to handler
               log.debug "COMMAND #{message.content} RECEIVED from CLIENT #{client} with USER #{message.user}"
-              handle_command(message.content)
+              handle_command(client, message.content)
 
             else
               # log debug message and display message in server console
@@ -66,12 +66,19 @@ class Ghastly::Electron::Server < ActiveRecord::Base
   end
 
   def command?(message)
-    return true if [:user, :passwd, :time].include? message.to_sym
+    return true if [:user, :passwd, :time, :quit, :exit].include? message.to_sym
     false
   end
 
-  def handle_command(message)
-    puts "RECEIVED COMMAND message"
+  def handle_command(client, command)
+    log.debug "RECEIVED COMMAND #{command}"
+    case command
+    when /quit/, /exit/
+      puts "#{client} has disconnected."
+      @clients.delete(client)
+      client.close
+    else
+    end
   end
 
   def stop
